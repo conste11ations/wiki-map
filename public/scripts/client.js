@@ -12,7 +12,18 @@ $(document).ready(function () {
   //   });;
   // });
 
-  $(() => {
+  const loadMarkers = (mapId, mapObj) => {
+    $.ajax({
+      method: "GET",
+      url: `/api/maps/${mapId}/map_points`
+    }).then(result => {
+      $.each(result.maps, (key, value) => {
+          L.marker([value.latitude, value.longitude]).addTo(mapObj);
+      });
+    });
+  };
+
+  const loadMaps = () => {
     $.ajax({
       method: "GET",
       url: "/api/maps"
@@ -35,10 +46,11 @@ $(document).ready(function () {
           accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
         }).addTo(mymap);
 
+        loadMarkers(value.id, mymap);
       });
     });
-  });
+  };
 
-
+loadMaps();
 
 });
