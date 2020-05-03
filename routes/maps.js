@@ -3,7 +3,7 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    let query = `SELECT * FROM maps`;
+    let query = `SELECT * FROM maps JOIN map_points on maps.id = map_id`;
     console.log(query);
     db.query(query)
       .then(data => {
