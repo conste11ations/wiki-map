@@ -1,4 +1,4 @@
-INSERT INTO maps (user_id, city, category, centerLat, centerLong) values
+INSERT INTO maps (user_id, city, category, center_lat, center_long) values
 (1, 'Toronto', 'food', 43.651070, -79.347015),
 (1, 'Montreal', 'food', 45.508888, -73.561668),
 (2, 'Toronto', 'accomodations', 43.651070, -79.347015),
