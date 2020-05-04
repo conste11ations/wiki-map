@@ -4,7 +4,17 @@ const router = express.Router();
 module.exports = (db) => {
 
   router.get("/", (req, res) => {
-    let query = `SELECT * FROM maps`;
+    //to refactor into a separate function later
+    let query;
+    if (req.query.city && req.query.category) {
+      query = `SELECT * FROM maps where city = '${req.query.city}' AND category = '${req.query.category}'`;
+    } else if (req.query.city) {
+      query = `SELECT * FROM maps where city = '${req.query.city}'`;
+    } else if (req.query.category) {
+      query = `SELECT * FROM maps where category = '${req.query.category}'`;
+    } else {
+      query = `SELECT * FROM maps`;
+    }
     console.log(query);
     db.query(query)
       .then(data => {
@@ -49,4 +59,5 @@ module.exports = (db) => {
   });
 
   return router;
-};
+
+  };
