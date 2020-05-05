@@ -18,7 +18,7 @@ $(document).ready(function () {
     $.each(mapList, (key, value) => {
       L.easyButton( '<span class="star">&starf;</span>', function(){
         alert('you just clicked the html entity \&starf;');
-      }).addTo(value);
+      }, { position: 'topright' }).addTo(value);
     });
 
     $.ajax({
@@ -29,15 +29,13 @@ $(document).ready(function () {
       let favoritedMaps = [];
       $.each(result.maps, (key, value) => {
         favoritedMaps = mapList.filter(map => map._container.id === 'map' + value.map_id);
-        console.log(favoritedMaps);
 
         if (favoritedMaps.length > 0) {
             L.easyButton( '<span class="star-yellow">&starf;</span>', function(){
               alert('you just clicked the html entity \&starf;');
-            }).addTo(favoritedMaps[0]);
+            }, { position: 'topright' }).addTo(favoritedMaps[0]);
         }
       });
-      console.log(favoritedMaps);
 
     });
   };
