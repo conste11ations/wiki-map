@@ -28,14 +28,14 @@ $(document).ready(function () {
         states: [{
                 stateName: 'not-starred',
                 icon:      `<span class="star" id="${key}">&starf;</span>`,
-                title:     'not a favorite',
+                title:     'Not favorited',
                 onClick: (btn, map, user) => {
                     btn.state('yellow-starred');
                 }
             }, {
                 stateName: 'yellow-starred',
                 icon:      `<span class="star-yellow" id="${key}">&starf;</span>`,
-                title:     'is a favorite',
+                title:     'Is favorited',
                 onClick: (btn, map, user) => {
                     btn.state('not-starred');
                 }
@@ -51,8 +51,7 @@ $(document).ready(function () {
 
       $.each(result.maps, (key, value) => {
         if (mapList['map' + value.map_id]) {
-          $(`span.star#map${value.map_id}`).toggleClass('star-yellow');
-          console.log(value);
+          $(`span.star#map${value.map_id}`).click();
         }
       });
     });
