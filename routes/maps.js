@@ -4,7 +4,7 @@ const router = express.Router();
 module.exports = (db) => {
 
   router.get("/", (req, res) => {
-    //to refactor into a separate function later
+
     let query;
     if (req.query.city && req.query.category) {
       query = `SELECT * FROM maps where city = '${req.query.city}' AND category = '${req.query.category}'`;

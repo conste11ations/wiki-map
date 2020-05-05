@@ -1,5 +1,7 @@
-
 $(document).ready(function () {
+
+  //had to hardcode this. Need to change all instances where this is used!
+  current_user = 1;
 
   const loadMarkers = (mapId, mapObj) => {
     $.ajax({
@@ -13,11 +15,29 @@ $(document).ready(function () {
   };
 
   const addFavorite = (userId, mapId) => {
-    return null;
+    $.ajax({
+      method: 'POST',
+      url: `/api/users/${userId}/favorites`,
+      data: {
+        user_id: userId,
+        map_id: mapId
+      }
+    }).then(result => {
+
+    });
   }
 
   const removeFavorite = (userId, mapId) => {
-    return null;
+    $.ajax({
+      method: 'DELETE',
+      url: `/api/users/${userId}/favorites`,
+      data: {
+        user_id: userId,
+        map_id: mapId
+      }
+    }).then(result => {
+
+    });
   }
 
   // loads the user's stars for a given map list (yellow denotes favorited by user, black is otherwise)
@@ -31,6 +51,7 @@ $(document).ready(function () {
                 title:     'Not favorited',
                 onClick: (btn, map, user) => {
                     btn.state('yellow-starred');
+                    addFavorite(current_user, map._container.id.substring(3));
                 }
             }, {
                 stateName: 'yellow-starred',
@@ -38,6 +59,7 @@ $(document).ready(function () {
                 title:     'Is favorited',
                 onClick: (btn, map, user) => {
                     btn.state('not-starred');
+                    removeFavorite(current_user, map._container.id.substring(3));
                 }
         }]
       });
@@ -96,7 +118,7 @@ $(document).ready(function () {
         mapList[mapId] = mymap;
       });
 // TODO needs to be refactored once the concept of authenticated users is introduced (remove hardcoded param of 1)
-      loadFavorites(1, mapList);
+      loadFavorites(current_user, mapList);
     });
   };
 
