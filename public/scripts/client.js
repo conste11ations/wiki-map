@@ -12,6 +12,17 @@ $(document).ready(function () {
     });
   };
 
+  const loadFavorites = (mapId, mapObj) => {
+    $.ajax({
+      method: "GET",
+      url: `/api/maps/${mapId}/map_points`
+    }).then(result => {
+      L.easyButton( '<span class="star">&starf;</span>', function(){
+        alert('you just clicked the html entity \&starf;');
+      }).addTo(mapObj);
+    });
+  };
+
   const loadMaps = (city, category) => {
     $.ajax({
       method: "GET",
@@ -21,7 +32,6 @@ $(document).ready(function () {
         category: category
       }
     }).then(result => {
-      console.log(result);
 
       $.each(result.maps, (key, value) => {
 
@@ -45,6 +55,8 @@ $(document).ready(function () {
           drawCircle: false,
         });
 
+        loadFavorites(value.id, mymap);
+
         loadMarkers(value.id, mymap);
       });
     });
@@ -52,6 +64,7 @@ $(document).ready(function () {
 
   loadMaps(undefined, undefined);
 
+  // landing page filtering
   $('form').on('submit', function(event) {
       event.preventDefault();
       $('.maps-list').html('');
