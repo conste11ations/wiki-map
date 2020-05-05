@@ -73,6 +73,7 @@ $(document).ready(function () {
 
       $.each(result.maps, (key, value) => {
         if (mapList['map' + value.map_id]) {
+          removeFavorite(current_user, value.map_id);
           $(`span.star#map${value.map_id}`).click();
         }
       });
