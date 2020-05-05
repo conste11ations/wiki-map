@@ -12,13 +12,36 @@ $(document).ready(function () {
     });
   };
 
+  const addFavorite = (userId, mapId) => {
+    return null;
+  }
+
+  const removeFavorite = (userId, mapId) => {
+    return null;
+  }
+
   // loads the user's stars for a given map list (yellow denotes favorited by user, black is otherwise)
   const loadFavorites = (userId, mapList) => {
 
     $.each(mapList, (key, value) => {
-      L.easyButton( '<span class="star">&starf;</span>', function(){
-        alert('you just clicked the html entity \&starf;');
-      }, { position: 'topright' }).addTo(value);
+      const favoritesButton = L.easyButton({
+        states: [{
+                stateName: 'not-starred',
+                icon:      '<span class="star">&starf;</span>',
+                title:     'not a favorite',
+                onClick: (btn, map) => {
+                    btn.state('yellow-starred');
+                }
+            }, {
+                stateName: 'yellow-starred',
+                icon:      '<span class="star-yellow">&starf;</span>',
+                title:     'is a favorite',
+                onClick: (btn, map) => {
+                    btn.state('not-starred');
+                }
+        }]
+      });
+    favoritesButton.addTo(value);
     });
 
     $.ajax({
@@ -28,16 +51,12 @@ $(document).ready(function () {
 
       let favoritedMaps = [];
       $.each(result.maps, (key, value) => {
-        favoritedMaps = mapList.filter(map => map._container.id === 'map' + value.map_id);
-
-        if (favoritedMaps.length > 0) {
-            L.easyButton( '<span class="star-yellow">&starf;</span>', function(){
-              alert('you just clicked the html entity \&starf;');
-            }, { position: 'topright' }).addTo(favoritedMaps[0]);
-        }
+          L.easyButton( '<span class="star-yellow">&starf;</span>', function(){
+            alert('you just clicked the html entity \&starf;');
+          }, { position: 'topright' }).addTo(mapList['map' + value.map_id]);
       });
-
     });
+
   };
 
   const loadMaps = (city, category) => {
@@ -50,7 +69,7 @@ $(document).ready(function () {
       }
     }).then(result => {
 
-      let mapList = [];
+      let mapList = {};
 
       $.each(result.maps, (key, value) => {
 
@@ -75,7 +94,7 @@ $(document).ready(function () {
         });
 
         loadMarkers(value.id, mymap);
-        mapList.push(mymap);
+        mapList[mapId] = mymap;
       });
 // TODO needs to be refactored once the concept of authenticated users is introduced (remove hardcoded param of 1)
       loadFavorites(1, mapList);
