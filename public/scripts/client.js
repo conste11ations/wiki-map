@@ -12,14 +12,33 @@ $(document).ready(function () {
     });
   };
 
-  const loadFavorites = (mapId, mapObj) => {
-    $.ajax({
-      method: "GET",
-      url: `/api/maps/${mapId}/map_points`
-    }).then(result => {
+  // loads the user's stars for a given map list (yellow denotes favorited by user, black is otherwise)
+  const loadFavorites = (userId, mapList) => {
+
+    $.each(mapList, (key, value) => {
       L.easyButton( '<span class="star">&starf;</span>', function(){
         alert('you just clicked the html entity \&starf;');
-      }).addTo(mapObj);
+      }).addTo(value);
+    });
+
+    $.ajax({
+      method: "GET",
+      url: `/api/users/${userId}/favorites`
+    }).then(result => {
+
+      let favoritedMaps = [];
+      $.each(result.maps, (key, value) => {
+        favoritedMaps = mapList.filter(map => map._container.id === 'map' + value.map_id);
+        console.log(favoritedMaps);
+
+        if (favoritedMaps.length > 0) {
+            L.easyButton( '<span class="star-yellow">&starf;</span>', function(){
+              alert('you just clicked the html entity \&starf;');
+            }).addTo(favoritedMaps[0]);
+        }
+      });
+      console.log(favoritedMaps);
+
     });
   };
 
@@ -32,6 +51,8 @@ $(document).ready(function () {
         category: category
       }
     }).then(result => {
+
+      let mapList = [];
 
       $.each(result.maps, (key, value) => {
 
@@ -55,10 +76,11 @@ $(document).ready(function () {
           drawCircle: false,
         });
 
-        loadFavorites(value.id, mymap);
-
         loadMarkers(value.id, mymap);
+        mapList.push(mymap);
       });
+// TODO needs to be refactored once the concept of authenticated users is introduced (remove hardcoded param of 1)
+      loadFavorites(1, mapList);
     });
   };
 
