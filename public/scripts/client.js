@@ -27,33 +27,33 @@ $(document).ready(function () {
       const favoritesButton = L.easyButton({
         states: [{
                 stateName: 'not-starred',
-                icon:      '<span class="star">&starf;</span>',
+                icon:      `<span class="star" id="${key}">&starf;</span>`,
                 title:     'not a favorite',
-                onClick: (btn, map) => {
+                onClick: (btn, map, user) => {
                     btn.state('yellow-starred');
                 }
             }, {
                 stateName: 'yellow-starred',
-                icon:      '<span class="star-yellow">&starf;</span>',
+                icon:      `<span class="star-yellow" id="${key}">&starf;</span>`,
                 title:     'is a favorite',
-                onClick: (btn, map) => {
+                onClick: (btn, map, user) => {
                     btn.state('not-starred');
                 }
         }]
       });
-    favoritesButton.addTo(value);
+      favoritesButton.addTo(value);
     });
 
     $.ajax({
-      method: "GET",
+      method: 'GET',
       url: `/api/users/${userId}/favorites`
     }).then(result => {
 
-      let favoritedMaps = [];
       $.each(result.maps, (key, value) => {
-          L.easyButton( '<span class="star-yellow">&starf;</span>', function(){
-            alert('you just clicked the html entity \&starf;');
-          }, { position: 'topright' }).addTo(mapList['map' + value.map_id]);
+        if (mapList['map' + value.map_id]) {
+          $(`span.star#map${value.map_id}`).toggleClass('star-yellow');
+          console.log(value);
+        }
       });
     });
 
@@ -61,8 +61,8 @@ $(document).ready(function () {
 
   const loadMaps = (city, category) => {
     $.ajax({
-      method: "GET",
-      url: "/api/maps",
+      method: 'GET',
+      url: '/api/maps',
       data: {
         city: city,
         category: category
@@ -111,7 +111,7 @@ $(document).ready(function () {
       const $city = $(this).find('input').val();
       const $category = $(this).find('option:selected').val().toLowerCase();
 
-    loadMaps(`${$city}`, `${$category}`);
+    $category === 'all categories' ? loadMaps(`${$city}`, undefined) : loadMaps(`${$city}`, `${$category}`);
   });
 
 
