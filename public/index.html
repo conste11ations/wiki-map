@@ -4,41 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <!-- CSS files -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-   crossorigin=""/>
 
-   <link rel='stylesheet' href="/styles/test.css" type="text/css" />
+  <!-- IOnic icons -->
+  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
   <!-- External JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-   <!-- Make sure you put this AFTER Leaflet's CSS -->
- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
- integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
- crossorigin=""></script>
- <!-- App JS -->
- <script type="text/javascript" src="/scripts/app.js"></script>
+  <!-- leaflet CSS files -->
+  <link rel="stylesheet" href="scripts/leaflet.css" />
+  <link rel="stylesheet" type="text/css" href="scripts/leaflet.draw.css" />
+  <link rel="stylesheet" href="scripts/leaflet.toolbar.css"/>
+  <link rel="stylesheet" href="scripts/leaflet.draw-toolbar.css"/>
+
+  <!-- <script type="text/javascript" src="/scripts/ColorPicker.js"></script> -->
+  <script type="text/javascript" src="/scripts/newMap.js"></script>
+  <script src="scripts/leaflet.js"></script>
+  <script src="scripts/leaflet.draw.js"></script>
+  <script src="scripts/leaflet.toolbar.js"></script>
+  <script src="scripts/leaflet.draw-toolbar.js"></script>
+  <script src="/scripts/ColorPicker.js"></script>
+  <!-- Easy button -->
+  <link rel="stylesheet" href="scripts/easy-button.css">
+  <script src="scripts/easy-button.js"></script>
+  <!-- <script type="text/javascript" src="/scripts/ColorPicker.js"></script> -->
+  <!-- client JS -->
+  <script type="text/javascript" src="/scripts/client.js"></script>
+  <link rel="stylesheet" href="styles/profile.css">
+  <link rel="stylesheet" href="styles/maps.css">
 
 </head>
 <body>
-  <nav>
-    <p class=  onclick=""></p>
-    <span>WikiMap</span>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">WikiMap</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="form-row align-items-center">
+        <form method="GET" action="/user/login">
+            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Login</button>
+        </form>
+          <form method="GET" action='/user/register'>
+            <button type="submit"  class="btn btn-outline-dark">Sign Up</button>
+          </form>
+      </div>
+    </div>
   </nav>
-  <header>
+  <header id="profile-banner">
     <div>
         <img src="">
     </div>
     <br>
-    <div id="">
-        <h2 >User Nname </h2>
+    <div>
+        <h2 >User Name </h2>
     </div>
   </header>
-  <section id ="new_map">
-    <!-- <div id="create_map">
-    </div> -->
-  </section>
+  <!-- <main class="container"> -->
+    <main>
+    <button id="create-new-map" onclick="createNewMap()"><img src='./images/new_map.png' alt="Create new map" title="Create Map"></button>
+    <div id ="mapid">
+    </div>
+  </main>
+  <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
 </body>
 </html>
