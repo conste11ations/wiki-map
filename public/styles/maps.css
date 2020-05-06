@@ -1,0 +1,14 @@
+#create-new-map img {
+  height: 2em;
+  width: auto;
+
+}
+#map{
+  height: 90vh;
+}
+
+.map-list >div {
+  height: 30vh;
+  width: 90vh;
+
+}
