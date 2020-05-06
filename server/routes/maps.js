@@ -3,9 +3,10 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM maps;`)
+    db.query(`SELECT * FROM map_points;`)
       .then(data => {
         const maps = data.rows;
+        // console.log(maps)
         res.json({ maps });
       })
       .catch(err => {
@@ -27,11 +28,15 @@ module.exports = (db) => {
     db.query(mapQuery, mapValues)
     .then(dbRes => {
       const mapID = dbRes.rows[0].id
-      const mapPointsQuery = `INSERT INTO map_points (map_id, item, title) VALUES ($1, $2, $3) RETURNING *;`;
+      const mapPointsQuery = `INSERT INTO map_points (map_id, layers, title) VALUES ($1, $2, $3) RETURNING *;`;
       const mapPointsValues = [mapID, items, 'Title'];
       return db.query(mapPointsQuery, mapPointsValues)
     })
-    .then(dbRes => console.log(dbRes))
+    .then(dbRes => {
+      const maps = dbRes.rows;
+      // console.log(maps)
+        res.json({ maps })
+    })
     .catch( err => console.log(err))
   });
 
