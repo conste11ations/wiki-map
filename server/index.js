@@ -37,7 +37,6 @@ app.use('/scripts', express.static(path.join(__dirname, '../node_modules/leaflet
 app.use('/scripts', express.static(path.join(__dirname, '../node_modules/leaflet-draw/dist/')));
 app.use('/scripts', express.static(path.join(__dirname, '../node_modules/leaflet-easybutton/src/')));
 
-
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
