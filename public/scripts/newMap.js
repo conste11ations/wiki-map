@@ -1,51 +1,55 @@
 function saveMap(map){
+  const points = [];
   map.eachLayer(function(layer){
-    console.log(layer);
-    console.log(layer._latlngs);
+    if (layer.editing) {
+      // console.log(layer.toGeoJSON())
+      // console.log(JSON.stringify(layer.toGeoJSON()))
+      points.push(layer.toGeoJSON());
+    }
 });
 
-  // $.ajax({
-  //   url: '/api/maps',
-  //   type: 'POST',
-  //   data: map
-  // }).then( function() {
-  //   // loadTweets();
-  //   // $('.new-tweet').slideUp();
-  // }).catch(error => {
-  //   return;
-  // });
+  $.ajax({
+    url: '/api/maps',
+    type: 'POST',
+    dataType: "json",
+    data: {items: JSON.stringify(points)}
+  }).then( function(dbRes) {
+    console.log(dbRes);
+  }).catch(error => {
+    return;
+  });
 }
-function createLabel(layer, text, map){
- removeLabel(layer);
-    var icon = createStaticLabelIcon(text);
-  var testspan = document.createElement("span");
-  document.body.appendChild(testspan);
+// function createLabel(layer, text, map){
+//  removeLabel(layer);
+//     var icon = createStaticLabelIcon(text);
+//   var testspan = document.createElement("span");
+//   document.body.appendChild(testspan);
 
-  testspan.className = "textwidth";
-  testspan.style.fontSize = "10px";
-  testspan.innerHTML = text;
-  var width = testspan.clientWidth +11;
-  icon.options.iconAnchor = [width  / 2, -4]; //That the label is centered
+//   testspan.className = "textwidth";
+//   testspan.style.fontSize = "10px";
+//   testspan.innerHTML = text;
+//   var width = testspan.clientWidth +11;
+//   icon.options.iconAnchor = [width  / 2, -4]; //That the label is centered
 
-  var label = L.marker(layer.getLatLng(),{icon: icon}).addTo(map);
-  layer.appendedLabel = label;
+//   var label = L.marker(layer.getLatLng(),{icon: icon}).addTo(map);
+//   layer.appendedLabel = label;
 
-  document.body.removeChild(testspan);
-}
+//   document.body.removeChild(testspan);
+// }
 
-function removeLabel(layer){
- if(layer.appendedLabel){
-        map.removeLayer(layer.appendedLabel); //Remove label that connected with marker, else the label will not removed
-  }
-}
+// function removeLabel(layer){
+//  if(layer.appendedLabel){
+//         map.removeLayer(layer.appendedLabel); //Remove label that connected with marker, else the label will not removed
+//   }
+// }
 
-function createStaticLabelIcon(labelText) {
-    return L.divIcon({
-        className: "leaflet-marker-label",
-        html: '<span class="leaflet-marker-iconlabel" style="background: #fff; color: #000;";>'+labelText+'</span>',
-        text : labelText,
-    });
-}
+// function createStaticLabelIcon(labelText) {
+//     return L.divIcon({
+//         className: "leaflet-marker-label",
+//         html: '<span class="leaflet-marker-iconlabel" style="background: #fff; color: #000;";>'+labelText+'</span>',
+//         text : labelText,
+//     });
+// }
 
 function createNewMap() {
   $('#create-new-map').css("display", 'none');
@@ -77,11 +81,12 @@ function createNewMap() {
   }).addTo(map);
 
   map.on('draw:created', function(evt) {
-    console.log(evt)
+    // console.log(evt)
     var	type = evt.layerType,
       layer = evt.layer;
 
-    console.log(layer.toGeoJSON())
+    // console.log(JSON.stringify(layer.toGeoJSON()))
+    // console.log(JSON.stringify(layer.toGeoJSON()).length)
     drawnItems.addLayer(layer);
     // createLabel(layer,"test", map);
 
