@@ -1,0 +1,19 @@
+.map {
+  height: 400px;
+  border: solid grey;
+  border-radius: 25px;
+  margin: 20px;
+}
+
+.star {
+  font-size: 1.5em;
+}
+
+.star-yellow {
+  color: orange;
+  font-size: 1.5em;
+}
+
+
+
+
