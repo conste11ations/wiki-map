@@ -4,6 +4,6 @@ CREATE TABLE maps (
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   city varchar(255) NOT NULL,
   category varchar(255) NOT NULL,
-  center_lat NUMERIC,
-  center_long NUMERIC
+  center_lat NUMERIC default 51.505,
+  center_long NUMERIC default -0.09
 );

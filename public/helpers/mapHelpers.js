@@ -1,12 +1,14 @@
 // // Defines helper functions for saving and getting tweets, using the database `db`
 
-const loadMarkers = (mapId, mapObj) => {
+const loadLayers = (mapId, mapObj) => {
   $.ajax({
     method: "GET",
     url: `/api/maps/${mapId}/map_points`
   }).then(result => {
     $.each(result.maps, (key, value) => {
-      L.marker([value.latitude, value.longitude]).addTo(mapObj);
+      L.geoJSON(JSON.parse(value.layers)).addTo(mapObj);
+
+      // L.marker([value.latitude, value.longitude]).addTo(mapObj);
     });
   });
 };
@@ -109,15 +111,12 @@ const loadMaps = (userId, city, category) => {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
       }).addTo(mymap);
-
-      L.geoJSON(JSON.parse(value.layers)).addTo(map);
-
       // mymap.pm.addControls({
       //   position: 'topleft',
       //   drawCircle: false,
       // });
 
-      loadMarkers(value.id, mymap);
+      loadLayers(value.id, mymap);
       mapList[mapId] = mymap;
     });
 

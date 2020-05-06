@@ -13,7 +13,7 @@ $(document).ready(function () {
 
     const $city = $(this).find('input').val();
     const $category = $(this).find('option:selected').val().toLowerCase();
-
+    console.log($category)
     $category === 'all categories' ? loadMaps(current_user, `${$city}`, undefined) : loadMaps(current_user, `${$city}`, `${$category}`);
   });
 

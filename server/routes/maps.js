@@ -64,7 +64,7 @@ module.exports = (db) => {
     }
     const items = req.body.items
     const mapQuery = `INSERT INTO maps (user_id, city, category) VALUES ($1, $2, $3) RETURNING *;`;
-    const mapValues = [1, 'toronto','Food'];
+    const mapValues = [1, 'toronto','food'];
     db.query(mapQuery, mapValues)
     .then(dbRes => {
       const mapID = dbRes.rows[0].id
