@@ -6,7 +6,7 @@ module.exports = (db) => {
     db.query(`SELECT * FROM map_points;`)
       .then(data => {
         const maps = data.rows;
-        // console.log(maps)
+        console.log(maps)
         res.json({ maps });
       })
       .catch(err => {

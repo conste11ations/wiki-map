@@ -23,8 +23,10 @@ function saveMap(map){
   .then( results => {
     console.log(results)
     $('#map').css('display', 'none');
+    $('.map-list').css("display", 'block').empty();
     $.each(results.maps, (key, value) => {
       console.log(value.map_id);
+      console.log(value);
       const mapId = `map${value.map_id}`;
       // class='map' data-city='${value.city}' data-category='${value.category}
       $('.map-list').append(`<div id='${mapId}'></div>`);
@@ -39,6 +41,7 @@ function saveMap(map){
       }).addTo(map);
       L.geoJSON(JSON.parse(value.layers)).addTo(map);
     });
+    console.log('hello');
   })
   .catch(error => {
     return;
@@ -77,8 +80,9 @@ function saveMap(map){
 // }
 
 function createNewMap() {
-  $('#mapid').css('display', 'block');
+  $('#map').css('display', 'block');
   $('#create-new-map').css("display", 'none');
+  $('.map-list').css("display", 'none');
   const map = L.map('map').setView([51.505, -0.09], 13);
   drawnItems = new L.FeatureGroup().addTo(map);
   editActions = [
@@ -131,6 +135,8 @@ function createNewMap() {
 
   L.easyButton( '<ion-icon name="save-outline"></ion-icon>', function(){
     saveMap(map);
+    map.remove();
+    $('#create-new-map').css("display", 'block');
   }, 'Save').addTo(map);
 // new L.Toolbar2.EditToolbar.Control({
 //   position: 'topleft'
