@@ -6,5 +6,6 @@ CREATE TABLE map_points (
   -- latitude NUMERIC NOT NULL,
   title VARCHAR(255) NOT NULL,
   description varchar(255),
-  image varchar(255)
+  image varchar(255),
+  website varchar(255)
 );
