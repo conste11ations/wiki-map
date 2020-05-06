@@ -7,8 +7,6 @@ const loadLayers = (mapId, mapObj) => {
   }).then(result => {
     $.each(result.maps, (key, value) => {
       L.geoJSON(JSON.parse(value.layers)).addTo(mapObj);
-
-      // L.marker([value.latitude, value.longitude]).addTo(mapObj);
     });
   });
 };
@@ -85,7 +83,6 @@ const loadFavorites = (userId, mapList) => {
 };
 
 const loadMaps = (userId, city, category) => {
-  console.log("hello rachel")
   $.ajax({
     method: 'GET',
     url: '/api/maps',
@@ -94,7 +91,6 @@ const loadMaps = (userId, city, category) => {
       category: category
     }
   }).then(result => {
-    console.log(result);
     $('#map').css('display', 'none');
     let mapList = {};
 

@@ -58,19 +58,31 @@ module.exports = (db) => {
   });
 
   router.post("/", (req, res) => {
-    if (!req.body.items) {
+    if (!req.body.layers) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
-    const items = req.body.items
+    const layers = req.body.layers
     const mapQuery = `INSERT INTO maps (user_id, city, category) VALUES ($1, $2, $3) RETURNING *;`;
     const mapValues = [1, 'toronto','food'];
     db.query(mapQuery, mapValues)
     .then(dbRes => {
       const mapID = dbRes.rows[0].id
-      const mapPointsQuery = `INSERT INTO map_points (map_id, layers, title) VALUES ($1, $2, $3) RETURNING *;`;
-      const mapPointsValues = [mapID, items, 'Title'];
-      return db.query(mapPointsQuery, mapPointsValues)
+      const mapPointsValues = [];
+      let mapPointsQuery = `INSERT INTO map_points (map_id, layers, title) VALUES`;
+      let count = 1;
+      console.log(layers)
+      for(const layer of JSON.parse(layers)) {
+        let l = JSON.stringify(layer);
+        if (mapPointsValues.length > 0) {
+          mapPointsQuery += ',';
+        }
+        mapPointsQuery += ` ($${count},$${count+1},$${count+2})`
+        mapPointsValues.push(mapID, l, 'Title');
+        count += 3;
+      }
+      console.log(mapPointsValues);
+      return db.query(mapPointsQuery, mapPointsValues);
     })
     .then(dbRes => {
       const maps = dbRes.rows;

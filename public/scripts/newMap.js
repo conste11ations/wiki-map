@@ -11,7 +11,7 @@ function saveMap(map){
     url: '/api/maps',
     type: 'POST',
     dataType: "json",
-    data: {items: JSON.stringify(points)}
+    data: {layers: JSON.stringify(points)}
   })
   .then(() => {
     $('#map').css('display', 'none').empty();
