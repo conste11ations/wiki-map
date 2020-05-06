@@ -1,0 +1,10 @@
+.maps-form {
+border: solid lightsteelblue;
+padding: 20px;
+margin: 20px;
+border-radius: 25px;
+}
+
+.maps-form h3 {
+color: lightslategray;
+}
