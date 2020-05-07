@@ -6,6 +6,12 @@ $(document).ready(function () {
 
   loadMaps(current_user, undefined, undefined);
 
+  // renderProfileButton
+  $('#profile').click(function () {
+    $('#profile-banner').slideToggle('slow');
+    // $('section.new-tweet textarea').focus();
+  });
+
   // landing page filtering
   $('form').on('submit', function (event) {
     event.preventDefault();
