@@ -11,7 +11,7 @@ $(document).ready(function () {
     event.preventDefault();
     $('.maps-list').html('');
 
-    const $city = $(this).find('input').val();
+    const $city = $(this).find('input').val().toLowerCase();
     const $category = $(this).find('option:selected').val().toLowerCase();
     console.log($category)
     $category === 'all categories' ? loadMaps(current_user, `${$city}`, undefined) : loadMaps(current_user, `${$city}`, `${$category}`);
