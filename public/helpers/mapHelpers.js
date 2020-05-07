@@ -6,6 +6,7 @@ const loadLayers = (mapId, mapObj) => {
     url: `/api/maps/${mapId}/map_points`
   }).then(result => {
     $.each(result.maps, (key, value) => {
+      console.log(result.maps);
       L.geoJSON(JSON.parse(value.layers)).addTo(mapObj);
     });
   });
@@ -107,10 +108,6 @@ const loadMaps = (userId, city, category) => {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
       }).addTo(mymap);
-      // mymap.pm.addControls({
-      //   position: 'topleft',
-      //   drawCircle: false,
-      // });
 
       loadLayers(value.id, mymap);
       mapList[mapId] = mymap;
