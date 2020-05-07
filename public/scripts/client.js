@@ -17,5 +17,4 @@ $(document).ready(function () {
     $category === 'all categories' ? loadMaps(current_user, `${$city}`, undefined) : loadMaps(current_user, `${$city}`, `${$category}`);
   });
 
-
 });
