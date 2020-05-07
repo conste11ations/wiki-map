@@ -1,7 +1,7 @@
 $(document).ready(function () {
   if (!sessionStorage.getItem('isLoggedIn')) {
     $('#create-new-map').css('display', 'none');
-   $('#logged-in span').html();
+    $('#logged-in span').html();
   } else {
     $('#create-new-map').css('display', 'block');
     $('#logged-in span').html(`Logged in as: ${sessionStorage.getItem('email')}`);
@@ -60,14 +60,54 @@ function createNewMap() {
   map.on('draw:created', function (evt) {
     var type = evt.layerType,
       layer = evt.layer;
-
+    feature = layer.feature = layer.feature || {};
+    feature.type = feature.type || "Feature";
+    var props = feature.properties = feature.properties || {};
+    props.desc = null;
+    props.title = null;
+    props.image = null;
     drawnItems.addLayer(layer);
+    addPopup(layer);
+
+    layer.on("add", function (event) {
+      event.target.openPopup();
+    });
 
     layer.on('click', function (event) {
       new L.Toolbar2.EditToolbar.Popup(event.latlng, {
         actions: editActions
       }).addTo(map, layer);
     });
+
+    function addPopup(layer) {
+
+      var content = document.createElement('div');
+
+      let contentDesc = document.createElement('input')
+      contentDesc.setAttribute('placeholder', 'set description')
+      var contentTitle = document.createElement('input');
+      contentTitle.setAttribute('placeholder', 'set title')
+      var contentImage = document.createElement('input');
+      contentImage.setAttribute('placeholder', 'link your image')
+      content.appendChild(contentDesc);
+      content.appendChild(contentTitle);
+      content.appendChild(contentImage);
+
+      content.addEventListener("keyup", function () {
+        layer.feature.properties.desc = contentDesc.value;
+        layer.feature.properties.title = contentTitle.value;
+        layer.feature.properties.image = contentImage.value;
+      });
+
+      layer.on("popupopen", function () {
+        contentDesc.value = layer.feature.properties.desc;
+        contentTitle.value = layer.feature.properties.title;
+        contentImage.value = layer.feature.properties.image;
+        content.focus();
+      });
+      layer.bindPopup(content).openPopup();
+    }
+
   });
 
   new L.Toolbar2.DrawToolbar({

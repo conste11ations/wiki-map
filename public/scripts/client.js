@@ -104,7 +104,7 @@ $(document).ready(function () {
     }
 
   });
-
+  scroll(0,0);
 });
 
 
