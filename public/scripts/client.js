@@ -6,14 +6,14 @@ $(document).ready(function () {
 
   loadMaps(current_user, undefined, undefined);
 
-  renderProfileButton(current_user);
+  renderProfileInfo(current_user);
 
-  $('#profile').click(function () {
+  $('#profile-image').click(function () {
     $('#profile-banner').slideToggle('slow');
-    // $('section.new-tweet textarea').focus();
   });
 
   // landing page filtering
+
   $('form').on('submit', function (event) {
     event.preventDefault();
     $('.maps-list').html('');
