@@ -7,5 +7,5 @@ CREATE TABLE users (
   email varchar(255) NOT NULL,
   password varchar(255) NOT NULL,
   city varchar(255) NOT NULL,
-  profile_image varchar(255) DEFAULT '',
+  profile_image varchar(255) DEFAULT ''
 );
