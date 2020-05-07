@@ -71,7 +71,7 @@ const loadFavorites = (userId, mapList) => {
     url: `/api/users/${userId}/favorites`
   }).then(result => {
 
-    $.each(result.maps, (key, value) => {
+    $.each(result.users, (key, value) => {
       if (mapList['map' + value.map_id] && $(`span.star#map${value.map_id}`)) {
         removeFavorite(userId, value.map_id);
         $(`span.star#map${value.map_id}`).click();
@@ -80,6 +80,22 @@ const loadFavorites = (userId, mapList) => {
   });
 
 };
+
+
+const loadAuthenticatedUserMaps = (userId, city, category, favorites, contributions) => {
+  $.ajax({
+    method: 'GET',
+    url: '/api/maps',
+    data: {
+      city: city,
+      category: category
+    }
+  }).then(result => {
+    $('#map').css('display', 'none');
+    $('.maps-list').html('');
+    let mapList = {};
+  })
+}
 
 const loadMaps = (userId, city, category) => {
   $.ajax({

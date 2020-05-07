@@ -1,4 +1,4 @@
-// import * as helpers from '../helpers/mapHelpers.js';
+
 $(document).ready(function () {
 
   //had to hardcode this. Need to change all instances where this is used!

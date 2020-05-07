@@ -23,16 +23,16 @@
 }
 
 #user-related h3 {
-  font-family: Helvetica, sans-serif;
+  font-family: 'Bungee Shade', cursive;
   font-weight: 900;
-  color:gray;
+  color:rgb(109, 121, 136);
   padding-top: 10px;
 }
 
 #user-related h2 {
-  font-family: Helvetica, sans-serif;
+  font-family: 'Bungee Shade', cursive;
   font-weight: 900;
-  color: gray;
+  color:rgb(109, 121, 136);
 }
 
 /*checkbox form details begin here */
