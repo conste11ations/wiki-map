@@ -14,7 +14,6 @@ module.exports = (db) => {
     } else {
       query = `SELECT * FROM maps`;
     }
-    console.log(query);
     db.query(query)
       .then(data => {
         const maps = data.rows;
@@ -29,7 +28,6 @@ module.exports = (db) => {
 
   router.get("/:id", (req, res) => {
     let query = `SELECT * FROM maps WHERE id = ${req.params.id}`;
-    console.log(query);
     db.query(query)
       .then(data => {
         const maps = data.rows;
@@ -44,7 +42,6 @@ module.exports = (db) => {
 
   router.get("/:id/map_points", (req, res) => {
     let query = `SELECT * FROM map_points WHERE map_id = ${req.params.id}`;
-    console.log(query);
     db.query(query)
       .then(data => {
         const maps = data.rows;
@@ -71,7 +68,6 @@ module.exports = (db) => {
       const mapPointsValues = [];
       let mapPointsQuery = `INSERT INTO map_points (map_id, layers, title) VALUES`;
       let count = 1;
-      console.log(layers)
       for(const layer of JSON.parse(layers)) {
         let l = JSON.stringify(layer);
         if (mapPointsValues.length > 0) {
@@ -81,7 +77,6 @@ module.exports = (db) => {
         mapPointsValues.push(mapID, l, 'Title');
         count += 3;
       }
-      console.log(mapPointsValues);
       return db.query(mapPointsQuery, mapPointsValues);
     })
     .then(dbRes => {

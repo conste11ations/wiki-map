@@ -8,7 +8,7 @@
 const express = require('express');
 const router  = express.Router();
 
-module.exports = (db) => {
+module.exports = (db, dbHelpers) => {
 
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM users;`)
@@ -82,6 +82,47 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  router.post('/register',  (req, res) => {
+
+    const {email, password, city, name} = req.body;
+    dbHelpers.createNewUser(email, password, city, name)
+    .then(data => {
+
+      console.log(data.id)
+      req.session.user_id =  data.id;
+      // $('#login-error').text('').slideUp();
+      res.json({ email });
+
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  });
+
+  router.post("/login", (req, res) => {
+    const {email , password} = req.body;
+    dbHelpers.findUser(email, password)
+    .then(id => {if (id) {
+      req.session.user_id =  id;
+      res.json({ email });
+    } else {
+      res.sendStatus(400);
+    }})
+    .catch(err => {
+      console.log(err)
+      res.sendStatus(400);
+    })
+  });
+
+  router.post("/logout", (req, res) => {
+    req.session = null;
+    res.sendStatus(200);
+    // res.redirect('/urls');
+  });
+
 
   return router;
 };

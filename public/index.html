@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="styles/maps.css">
 <!-- CSS files -->
   <link rel='stylesheet' href="/styles/maps-list.css" type="text/css" />
+  <link rel='stylesheet' href="/styles/sign-up.css" type="text/css" />
   <script src="/helpers/mapHelpers.js"></script>
 
 
@@ -48,15 +49,59 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="form-row align-items-center">
-        <form method="GET" action="/user/login">
-            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Login</button>
+        <form method="GET" action="api/user/login">
+          <button type="submit" name="login" class="btn btn-info" style="margin-right: 10px;" data-toggle="modal"
+          data-target="#loginModal">Login</button>
         </form>
-          <form method="GET" action='/user/register'>
-            <button type="submit"  class="btn btn-outline-dark">Sign Up</button>
+          <form method="GET" action='api/user/register'>
+            <button type="submit"  name= 'signUp', class="btn btn-info" style="margin-right: 10px;" data-toggle="modal"
+            data-target="#loginModal">Sign Up</button>
           </form>
       </div>
     </div>
   </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="loginModalLabel"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id='login-error'></p>
+          <form role="form" method="POST" action='api/users/login'>
+
+            <div class="form-group sign-up">
+              <label for="user-name">Full Name</label>
+              <input type="text" class="form-control" id="user-name" placeholder="Enter Name">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group sign-up">
+              <label for="city">City</label>
+              <input type="text" class="form-control" id="city" placeholder="Enter City">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="" checked>Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-info btn-block"></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <header id="profile-banner">
     <div>
         <img src="">

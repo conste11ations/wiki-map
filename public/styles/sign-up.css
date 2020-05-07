@@ -1,0 +1,7 @@
+.sign-up{
+  display: none;
+}
+#login-error{
+  display: none;
+  color:red;
+}
