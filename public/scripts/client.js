@@ -6,7 +6,8 @@ $(document).ready(function () {
 
   loadMaps(current_user, undefined, undefined);
 
-  // renderProfileButton
+  renderProfileButton(current_user);
+
   $('#profile').click(function () {
     $('#profile-banner').slideToggle('slow');
     // $('section.new-tweet textarea').focus();
