@@ -78,24 +78,8 @@ const loadFavorites = (userId, mapList) => {
       }
     });
   });
-
 };
 
-
-const loadAuthenticatedUserMaps = (userId, city, category, favorites, contributions) => {
-  $.ajax({
-    method: 'GET',
-    url: '/api/maps',
-    data: {
-      city: city,
-      category: category
-    }
-  }).then(result => {
-    $('#map').css('display', 'none');
-    $('.maps-list').html('');
-    let mapList = {};
-  })
-}
 
 const loadMaps = (userId, city, category) => {
   $.ajax({
@@ -128,7 +112,6 @@ const loadMaps = (userId, city, category) => {
       loadLayers(value.id, mymap);
       mapList[mapId] = mymap;
     });
-
     loadFavorites(userId, mapList);
   });
 }

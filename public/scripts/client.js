@@ -13,15 +13,18 @@ $(document).ready(function () {
   });
 
   // landing page filtering
+  // need to integrate with user authentication - see if(current_user)
 
-  $('form').on('submit', function (event) {
-    event.preventDefault();
-    $('.maps-list').html('');
+    $('form#public-maps-list').on('submit', function (event) {
+      event.preventDefault();
+      $('.maps-list').html('');
 
-    const $city = $(this).find('input').val().toLowerCase();
-    const $category = $(this).find('option:selected').val().toLowerCase();
+      const $city = $(this).find('input').val().toLowerCase();
+      const $category = $(this).find('option:selected').val().toLowerCase();
 
-    $category === 'all categories' ? loadMaps(current_user, `${$city}`, undefined) : loadMaps(current_user, `${$city}`, `${$category}`);
-  });
+        $category === 'all categories' ? loadMaps(current_user, `${$city}`, undefined) : loadMaps(current_user, `${$city}`, `${$category}`);
+
+    });
+
 
 });
