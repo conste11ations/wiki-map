@@ -6,7 +6,6 @@ const loadLayers = (mapId, mapObj) => {
     url: `/api/maps/${mapId}/map_points`
   }).then(result => {
     $.each(result.maps, (key, value) => {
-      console.log(result.maps);
       L.geoJSON(JSON.parse(value.layers)).addTo(mapObj);
     });
   });
@@ -93,10 +92,11 @@ const loadMaps = (userId, city, category) => {
     }
   }).then(result => {
     $('#map').css('display', 'none');
-    console.log("rk", result.maps);
+    $('.maps-list').html('');
     let mapList = {};
 
     $.each(result.maps, (key, value) => {
+
       const mapId = `map${value.id}`;
       $('.maps-list').append(`<div id='${mapId}' class='map' data-city='${value.city}' data-category='${value.category}'></div>`);
       const mymap = L.map(mapId).setView([value.center_lat, value.center_long], 13);
