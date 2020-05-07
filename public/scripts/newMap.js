@@ -42,10 +42,27 @@ function createNewMap() {
   $('#create-new-map').css("display", 'none');
   $('.map-list').css("display", 'none');
   const map = L.map('map').setView([51.505, -0.09], 13);
+  const container = $('<div> Hello Rachel</div>');
+
+
   drawnItems = new L.FeatureGroup().addTo(map);
   editActions = [
     L.Toolbar2.EditAction.Popup.Edit,
     L.Toolbar2.EditAction.Popup.Delete,
+    L.Toolbar2.Action.extend({
+      options: {
+      toolbarIcon: {
+      className: 'leaflet-color-picker',
+      html: '<ion-icon name="information-circle-outline"></ion-icon>'
+    },
+    subToolbar:
+     new L.Toolbar2({ actions: [
+      L.ColorPicker.extendOptions({ color: '#db1d0f' }),
+      L.ColorPicker.extendOptions({ color: '#025100' }),
+      L.ColorPicker.extendOptions({ color: '#ffff00' }),
+      L.ColorPicker.extendOptions({ color: '#0000ff' })
+    ]})
+  }})
 
   ];
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -60,6 +77,15 @@ function createNewMap() {
   map.on('draw:created', function (evt) {
     var type = evt.layerType,
       layer = evt.layer;
+    // console.log(layer)
+    //form for title
+    // layer
+    layer.bindPopup("hello");
+    layer.on("add", function (event) {
+      event.target.openPopup();
+      console.log(layer);
+    });
+
 
     drawnItems.addLayer(layer);
 
@@ -69,6 +95,8 @@ function createNewMap() {
       }).addTo(map, layer);
     });
   });
+
+
 
   new L.Toolbar2.DrawToolbar({
     position: 'topleft'
