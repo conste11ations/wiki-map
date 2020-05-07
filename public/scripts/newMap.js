@@ -107,7 +107,6 @@ function createNewMap() {
       });
       layer.bindPopup(content).openPopup();
     }
-
   });
 
   new L.Toolbar2.DrawToolbar({
