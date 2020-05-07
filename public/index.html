@@ -39,9 +39,6 @@
   <link rel='stylesheet' href="/styles/maps-list.css" type="text/css" />
   <link rel='stylesheet' href="/styles/maps-form.css" type="text/css" />
   <link rel='stylesheet' href="/styles/layout.css" type="text/css" />
-  <script src="/helpers/mapHelpers.js"></script>
-
-
 </head>
 
 <body>
@@ -58,6 +55,9 @@
         <form method="GET" action='/user/register'>
           <button type="submit" class="btn btn-outline-dark">Sign Up</button>
         </form>
+        <div id="profile-image">
+          <a href="#"><img id="profile-thumbnail" class="invert" src='' /></a>
+        </div>
       </div>
     </div>
   </nav>
@@ -93,14 +93,32 @@
     </div>
   </div>
 
-  <header id="profile-banner">
-    <div>
-      <img src="">
-    </div>
-    <br>
-    <div>
-      <h2>User Name </h2>
-    </div>
+  <header id="profile-banner" style="display: none;">
+    <section id="user-related">
+      <img id="profile-large" width="7%" src='' />
+    </section>
+    <section id="maps-related">
+      <form>
+        <div class="form-row align-items-center">
+          <h3>Favorites & Contributions</h3>
+          <div class="col-auto">
+            <label class="checkbox-inline">Show favorites only
+              <input type="checkbox" checked="checked">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="col-auto">
+            <label class="checkbox-inline">Show contributions only
+              <input type="checkbox">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <!-- <div class="col-auto">
+            <button type="submit" class="btn btn-info mb-2">Submit</button>
+          </div> -->
+        </div>
+      </form>
+    </section>
   </header>
   <!-- <main class="container"> -->
   <main>
@@ -109,7 +127,7 @@
     <div id="map">
     </div>
     <section class="maps-form">
-      <form action="/login" method="POST">
+      <form>
         <div class="form-row align-items-center">
           <h3>Filter maps by</h3>
           <div class="col-auto">
@@ -146,8 +164,10 @@
 
 
   <!-- App JS -->
-  <script type="text/javascript" src="/scripts/client.js"></script>
-  <script type="text/javascript" src="/scripts/newMap.js"></script>
+  <script src="/helpers/mapHelpers.js"></script>
+  <script src="/helpers/userHelpers.js"></script>
+  <script src="/scripts/client.js"></script>
+  <script src="/scripts/newMap.js"></script>
 
 </body>
 

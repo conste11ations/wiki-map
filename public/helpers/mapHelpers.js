@@ -1,4 +1,3 @@
-// // Defines helper functions for saving and getting tweets, using the database `db`
 
 const loadLayers = (mapId, mapObj) => {
   $.ajax({

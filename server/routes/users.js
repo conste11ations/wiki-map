@@ -28,8 +28,8 @@ module.exports = (db) => {
     console.log(query);
     db.query(query)
       .then(data => {
-        const maps = data.rows;
-        res.json({ maps });
+        const users = data.rows;
+        res.json({ users });
       })
       .catch(err => {
         res
@@ -43,8 +43,8 @@ module.exports = (db) => {
     console.log(query);
     db.query(query)
       .then(data => {
-        const maps = data.rows;
-        res.json({ maps });
+        const users = data.rows;
+        res.json({ users });
       })
       .catch(err => {
         res
