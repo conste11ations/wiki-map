@@ -93,6 +93,7 @@ const loadMaps = (userId, city, category) => {
     }
   }).then(result => {
     $('#map').css('display', 'none');
+    console.log("rk", result.maps);
     let mapList = {};
 
     $.each(result.maps, (key, value) => {

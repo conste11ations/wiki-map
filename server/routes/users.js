@@ -54,7 +54,7 @@ module.exports = (db) => {
   });
 
   router.post("/:id/favorites", (req, res) => {
-    let query = `INSERT INTO favorites (user_id, map_id) VALUES (${req.body.user_id}, ${req.body.map_id});`;
+    let query = `INSERT INTO favorites (user_id, map_id) VALUES (${req.body.user_id}, ${req.body.map_id}) RETURNING *;`;
     console.log(query);
     db.query(query)
       .then(data => {
@@ -69,7 +69,7 @@ module.exports = (db) => {
   });
 
   router.delete("/:id/favorites", (req, res) => {
-    let query = `DELETE FROM favorites WHERE user_id = ${req.body.user_id} AND map_id = ${req.body.map_id};`;
+    let query = `DELETE FROM favorites WHERE user_id = ${req.body.user_id} AND map_id = ${req.body.map_id} RETURNING *;`;
     console.log(query);
     db.query(query)
       .then(data => {
