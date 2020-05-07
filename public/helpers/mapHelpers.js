@@ -92,9 +92,11 @@ const loadMaps = (userId, city, category) => {
     }
   }).then(result => {
     $('#map').css('display', 'none');
+    $('.maps-list').html('');
     let mapList = {};
 
     $.each(result.maps, (key, value) => {
+
       const mapId = `map${value.id}`;
       $('.maps-list').append(`<div id='${mapId}' class='map' data-city='${value.city}' data-category='${value.category}'></div>`);
       const mymap = L.map(mapId).setView([value.center_lat, value.center_long], 13);
@@ -107,10 +109,6 @@ const loadMaps = (userId, city, category) => {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
       }).addTo(mymap);
-      // mymap.pm.addControls({
-      //   position: 'topleft',
-      //   drawCircle: false,
-      // });
 
 
 

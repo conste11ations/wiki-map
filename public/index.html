@@ -10,7 +10,8 @@
   <!-- IOnic icons -->
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
   <!-- External JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -18,8 +19,8 @@
   <!-- leaflet CSS files -->
   <link rel="stylesheet" href="scripts/leaflet.css" />
   <link rel="stylesheet" type="text/css" href="scripts/leaflet.draw.css" />
-  <link rel="stylesheet" href="scripts/leaflet.toolbar.css"/>
-  <link rel="stylesheet" href="scripts/leaflet.draw-toolbar.css"/>
+  <link rel="stylesheet" href="scripts/leaflet.toolbar.css" />
+  <link rel="stylesheet" href="scripts/leaflet.draw-toolbar.css" />
 
   <!-- <script type="text/javascript" src="/scripts/ColorPicker.js"></script> -->
   <script src="scripts/leaflet.js"></script>
@@ -34,17 +35,21 @@
   <!-- client JS -->
   <link rel="stylesheet" href="styles/profile.css">
   <link rel="stylesheet" href="styles/maps.css">
-<!-- CSS files -->
+  <!-- CSS files -->
   <link rel='stylesheet' href="/styles/maps-list.css" type="text/css" />
   <link rel='stylesheet' href="/styles/sign-up.css" type="text/css" />
+  <link rel='stylesheet' href="/styles/maps-form.css" type="text/css" />
+  <link rel='stylesheet' href="/styles/layout.css" type="text/css" />
   <script src="/helpers/mapHelpers.js"></script>
 
 
 </head>
+
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">WikiMap</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-brand"><img src="/images/logo.png"></img></span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -110,54 +115,60 @@
 
   <header id="profile-banner">
     <div>
-        <img src="">
+      <img src="">
     </div>
     <br>
     <div>
-        <h2 >User Name </h2>
+      <h2>User Name </h2>
     </div>
   </header>
   <!-- <main class="container"> -->
-    <main>
-    <button id="create-new-map" onclick="createNewMap()"><img src='./images/new_map.png' alt="Create new map" title="Create Map"></button>
-    <div id ="map">
+  <main>
+    <button id="create-new-map" onclick="createNewMap()"><img src='./images/new_map.png' alt="Create new map"
+        title="Create Map"></button>
+    <div id="map">
     </div>
-	<section class="maps-form">
-    <form>
-      <div class="form-row align-items-center">
-        <div class="col-auto">
-          <label class="sr-only" for="inlineFormInput">Location</label>
-          <input type="text" class="form-control mb-2" id="inlineFormInput-location" placeholder="Location">
+    <section class="maps-form">
+      <form action="/login" method="POST">
+        <div class="form-row align-items-center">
+          <h3>Filter maps by</h3>
+          <div class="col-auto">
+            <label class="sr-only" for="inlineFormInput">Location</label>
+            <input type="text" class="form-control mb-2" id="inlineFormInput-location" placeholder="Location">
+          </div>
+          <div class="col-auto">
+            <!-- <label class="sr-only" for="inlineFormInputGroup">Category</label> -->
+            <!-- TODO: dynamic dropdown instead of hardcoding -->
+            <select id="category" class="form-control">
+              <option>All categories</option>
+              <option>Food</option>
+              <option>Attractions</option>
+              <option>Accomodations</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-info mb-2">Submit</button>
+          </div>
         </div>
-        <div class="col-auto">
-          <!-- <label class="sr-only" for="inlineFormInputGroup">Category</label> -->
-          <!-- TODO: dynamic dropdown instead of hardcoding -->
-          <select id="category" class="form-control">
-            <option>All categories</option>
-            <option>Food</option>
-            <option>Attractions</option>
-            <option>Accomodations</option>
-          </select>
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-primary mb-2">Submit</button>
-        </div>
-      </div>
-    </form>
-  </section>
+      </form>
+    </section>
+
     <section class="maps-list"></section>
 
   </main>
   <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 
 
   <!-- App JS -->
   <script type="text/javascript" src="/scripts/client.js"></script>
-	<script type="text/javascript" src="/scripts/newMap.js"></script>
+  <script type="text/javascript" src="/scripts/newMap.js"></script>
 
 </body>
 
 </html>
-
