@@ -13,10 +13,11 @@ module.exports = (db) => {
     const query = `SELECT id, email, password FROM users WHERE email = '${eml}' ` //and password = '${hashedPassword}'`
     return db.query(query)
     .then( dbRes => {
-      console.log(dbRes.rows[0])
-      const  {id,email, password}  = dbRes.rows[0]
-      if (email === eml && bcrypt.compareSync(pass, password)) {
+      if(dbRes.rows.length > 0) {
+        const  {id,email, password}  = dbRes.rows[0]
+        if (email === eml && bcrypt.compareSync(pass, password)) {
         return id;
+        }
       }
      return ;
     })

@@ -59,9 +59,11 @@ module.exports = (db) => {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
+    const user_id = req.session.user_id;
+    console.log(user_id);
     const layers = req.body.layers
     const mapQuery = `INSERT INTO maps (user_id, city, category) VALUES ($1, $2, $3) RETURNING *;`;
-    const mapValues = [1, 'toronto','food'];
+    const mapValues = [user_id, 'toronto','food'];
     db.query(mapQuery, mapValues)
     .then(dbRes => {
       const mapID = dbRes.rows[0].id

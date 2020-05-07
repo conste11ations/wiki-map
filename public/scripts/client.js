@@ -1,6 +1,13 @@
 // import * as helpers from '../helpers/mapHelpers.js';
 $(document).ready(function () {
-
+  if (!sessionStorage.getItem('isLoggedIn')) {
+    $('#logged-in').css('display', 'none');
+    $('.login-options').css('display', 'block');
+  } else {
+    $('#logged-in').css('display', 'block');
+    $('.login-options').css('display', 'none');
+  }
+  console.log(sessionStorage.getItem('isLoggedIn'));
   //had to hardcode this. Need to change all instances where this is used!
   current_user = 1;
 
@@ -17,7 +24,24 @@ $(document).ready(function () {
     $category === 'all categories' ? loadMaps(current_user, `${$city}`, undefined) : loadMaps(current_user, `${$city}`, `${$category}`);
   });
 
-  $('nav form button').click(event => {
+  $('#logged-in').click(event => {
+    event.preventDefault()
+    $.ajax({
+      url: 'api/users/logout',
+      type: "POST",
+      data: ''
+    })
+    .then(() => {
+     sessionStorage.clear();
+     location.reload();
+   })
+   .catch(err => {
+
+    //  $('#login-error').html('Email already in use, try loging in').slideDown();
+   })
+  })
+
+  $('nav form').click(event => {
     event.preventDefault();
     const button = event.target.attributes.name.nodeValue;
     const login = (button === 'login' ? true : false);
@@ -35,41 +59,54 @@ $(document).ready(function () {
     }
   })
 
-});
-
- $('.modal-body form').submit(event => {
-  event.preventDefault();
-  // console.log(event);
-  const button = $('.modal-body button').text();
-  const login = (button === 'Login' ? true : false)
-  if (!login) {
-    const info = {email:$('#email').val(), password:$('#password').val(), city:$('#city').val(), name:$('#user-name').val()};
-   $.ajax({
-     url: 'api/users/register',
-     type: "POST",
-     data: info
-   })
-   .then(() => {
-    $('.close').click();
-  })
-  .catch(err => {
-    $('#login-error').html('Email already in use, try loging in').slideDown();
-  })
-  } else {
-    const info = {email:$('#email').val(), password:$('#password').val()};
-
-    $.ajax({
-      url: 'api/users/login',
-      type: "POST",
-      data: info
+  $('.modal-body form').submit(event => {
+    event.preventDefault();
+    // console.log(event);
+    const button = $('.modal-body button').text();
+    const login = (button === 'Login' ? true : false)
+    if (!login) {
+      const info = {email:$('#email').val(), password:$('#password').val(), city:$('#city').val(), name:$('#user-name').val()};
+     $.ajax({
+       url: 'api/users/register',
+       type: "POST",
+       data: info
+     })
+     .then(() => {
+      sessionStorage.setItem('isLoggedIn', true);
+      // sessionStorage.setItem('user_id', `${res.id}`)
+      sessionStorage.setItem('email', `${email}`)
+      $('.close').click();
+      location.reload();
     })
-    .then(() => {
-     $('.close').click();
-   })
-   .catch(err => {
-     console.log('error',err)
-     $('#login-error').html('User does not exist').slideDown();
-   })
-  }
+    .catch(err => {
+      $('#login-error').html('Email already in use, try loging in').slideDown();
+    })
+    } else {
+      const info = {email:$('#email').val(), password:$('#password').val()};
+
+      $.ajax({
+        url: 'api/users/login',
+        type: "POST",
+        data: info
+      })
+      .then((res) => {
+        console.log(res);
+        sessionStorage.setItem('isLoggedIn',true);
+        // sessionStorage.setItem('user_id', `${res.id}`)
+        sessionStorage.setItem('email', `${res.email}`)
+       $('.close').click();
+       location.reload();
+     })
+     .catch(err => {
+       console.log('error',err)
+       $('#login-error').html('User does not exist').slideDown();
+     })
+    }
+
+  });
 
 });
+
+
+
+

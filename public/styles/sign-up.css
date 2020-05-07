@@ -5,3 +5,11 @@
   display: none;
   color:red;
 }
+
+#logged-in {
+  display: none;
+}
+
+.login-options{
+  display: none;
+}

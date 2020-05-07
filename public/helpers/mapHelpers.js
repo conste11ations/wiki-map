@@ -112,6 +112,14 @@ const loadMaps = (userId, city, category) => {
       //   drawCircle: false,
       // });
 
+
+
+    L.easyButton( '<ion-icon name="create-outline"></ion-icon>', function(){
+      // saveMap(map);
+      // map.remove();
+      // $('#create-new-map').css("display", 'block');
+    }, 'Save').addTo(mymap);
+
       loadLayers(value.id, mymap);
       mapList[mapId] = mymap;
     });

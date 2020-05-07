@@ -1,3 +1,12 @@
+$(document).ready(function () {
+  if (!sessionStorage.getItem('isLoggedIn')) {
+    $('#create-new-map').css('display', 'none');
+   $('#logged-in span').html();
+  } else {
+    $('#create-new-map').css('display', 'block');
+    $('#logged-in span').html(`Logged in as: ${sessionStorage.getItem('email')}`);
+  }
+});
 
 function saveMap(map){
   const points = [];
@@ -25,6 +34,9 @@ function saveMap(map){
 
 
 function createNewMap() {
+  if (sessionStorage.getItem('status') != null) {
+
+  }
   $('#map').css('display', 'block');
   $('#create-new-map').css("display", 'none');
   $('.map-list').css("display", 'none');

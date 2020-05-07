@@ -88,9 +88,9 @@ module.exports = (db, dbHelpers) => {
     const {email, password, city, name} = req.body;
     dbHelpers.createNewUser(email, password, city, name)
     .then(data => {
-
-      console.log(data.id)
-      req.session.user_id =  data.id;
+      console.log(data)
+      console.log(data.rows[0].id)
+      req.session.user_id =  data.rows[0].id;
       // $('#login-error').text('').slideUp();
       res.json({ email });
 
@@ -105,9 +105,11 @@ module.exports = (db, dbHelpers) => {
   router.post("/login", (req, res) => {
     const {email , password} = req.body;
     dbHelpers.findUser(email, password)
-    .then(id => {if (id) {
+    .then(id => {
+      if (id) {
       req.session.user_id =  id;
-      res.json({ email });
+      // res.redirect(`/api/users/${id}`);
+      res.json( {id, email} );
     } else {
       res.sendStatus(400);
     }})
