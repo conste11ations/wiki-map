@@ -5,15 +5,20 @@ const loadLayers = (mapId, mapObj) => {
     url: `/api/maps/${mapId}/map_points`
   }).then(result => {
     $.each(result.maps, (key, value) => {
+
+      const layerProp = JSON.parse(value.layers).properties;
+// to account for the edit/delete palette action in createMap creating extra rows in db
+      if (!(Object.keys(layerProp).length === 0 && layerProp.constructor === Object)) {
       const popupContent =
-      `<b>Title:</b> ${JSON.parse(value.layers).properties.title}</br>
-      <b>Description:</b> ${JSON.parse(value.layers).properties.desc}</br>
-      <b>Thumbnail:</b></br><img src="${JSON.parse(value.layers).properties.image}" alt="${JSON.parse(value.layers).properties.title} pic" height="50" width="50"/>`;
+      `<b>Title:</b> ${layerProp.title}</br>
+      <b>Description:</b> ${layerProp.desc}</br>
+      <b>Thumbnail:</b></br><img src="${layerProp.image}" alt="${layerProp.title} pic" height="50" width="50"/>`;
       L.geoJSON(JSON.parse(value.layers), {
         onEachFeature: (feature, layer) => {
           layer.bindPopup(popupContent);
         }
       }).addTo(mapObj);
+    }
     });
   });
 };
