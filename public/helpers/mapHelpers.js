@@ -5,7 +5,20 @@ const loadLayers = (mapId, mapObj) => {
     url: `/api/maps/${mapId}/map_points`
   }).then(result => {
     $.each(result.maps, (key, value) => {
-      L.geoJSON(JSON.parse(value.layers)).addTo(mapObj);
+
+      const layerProp = JSON.parse(value.layers).properties;
+// to account for the edit/delete palette action in createMap creating extra rows in db
+      if (!(Object.keys(layerProp).length === 0 && layerProp.constructor === Object)) {
+      const popupContent =
+      `<b>Title:</b> ${layerProp.title}</br>
+      <b>Description:</b> ${layerProp.desc}</br>
+      <b>Thumbnail:</b></br><img src="${layerProp.image}" alt="${layerProp.title} pic" height="100" width="100"/>`;
+      L.geoJSON(JSON.parse(value.layers), {
+        onEachFeature: (feature, layer) => {
+          layer.bindPopup(popupContent);
+        }
+      }).addTo(mapObj);
+    }
     });
   });
 };
@@ -115,18 +128,20 @@ const loadMaps = (userId, city, category,favorites, contributions) => {
       }).addTo(mymap);
 
 
-    if (sessionStorage.getItem('isLoggedIn')) {
-      L.easyButton( '<ion-icon name="create-outline"></ion-icon>', function(){
-        createNewMap(value.id);
-      // map.remove();
-      // $('#create-new-map').css("display", 'block');
-      }, 'Edit').addTo(mymap);
-    }
+      if (sessionStorage.getItem('isLoggedIn')) {
+        L.easyButton('<ion-icon name="create-outline"></ion-icon>', function () {
+          createNewMap(value.id);
+          // map.remove();
+          // $('#create-new-map').css("display", 'block');
+        }, 'Edit').addTo(mymap);
+      }
 
       loadLayers(value.id, mymap);
       mapList[mapId] = mymap;
     });
+    if (sessionStorage.getItem('isLoggedIn')) {
     loadFavorites(userId, mapList);
+    }
   });
 }
 

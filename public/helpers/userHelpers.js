@@ -11,10 +11,3 @@ const renderProfileInfo = (userId) => {
   });
 };
 
-const renderFavoritesThumbnails = (userId) => {
-  return null;
-}
-
-const renderContributionsThumbnails = (userId) => {
-  return null;
-}
