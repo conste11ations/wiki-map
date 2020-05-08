@@ -12,7 +12,7 @@ const loadLayers = (mapId, mapObj) => {
       const popupContent =
       `<b>Title:</b> ${layerProp.title}</br>
       <b>Description:</b> ${layerProp.desc}</br>
-      <b>Thumbnail:</b></br><img src="${layerProp.image}" alt="${layerProp.title} pic" height="50" width="50"/>`;
+      <b>Thumbnail:</b></br><img src="${layerProp.image}" alt="${layerProp.title} pic" height="100" width="100"/>`;
       L.geoJSON(JSON.parse(value.layers), {
         onEachFeature: (feature, layer) => {
           layer.bindPopup(popupContent);
