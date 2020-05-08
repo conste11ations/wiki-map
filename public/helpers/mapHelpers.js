@@ -134,7 +134,9 @@ const loadMaps = (userId, city, category) => {
       loadLayers(value.id, mymap);
       mapList[mapId] = mymap;
     });
+    if (sessionStorage.getItem('isLoggedIn')) {
     loadFavorites(userId, mapList);
+    }
   });
 }
 
