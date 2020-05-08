@@ -1,4 +1,3 @@
-// // Defines helper functions for saving and getting tweets, using the database `db`
 
 const loadLayers = (mapId, mapObj) => {
   $.ajax({
@@ -72,15 +71,15 @@ const loadFavorites = (userId, mapList) => {
     url: `/api/users/${userId}/favorites`
   }).then(result => {
 
-    $.each(result.maps, (key, value) => {
+    $.each(result.users, (key, value) => {
       if (mapList['map' + value.map_id] && $(`span.star#map${value.map_id}`)) {
         removeFavorite(userId, value.map_id);
         $(`span.star#map${value.map_id}`).click();
       }
     });
   });
-
 };
+
 
 const loadMaps = (userId, city, category) => {
   $.ajax({
@@ -121,7 +120,6 @@ const loadMaps = (userId, city, category) => {
       loadLayers(value.id, mymap);
       mapList[mapId] = mymap;
     });
-
     loadFavorites(userId, mapList);
   });
 }

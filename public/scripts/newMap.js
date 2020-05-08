@@ -41,6 +41,7 @@ function createNewMap() {
   $('#map').css('display', 'block');
   $('#create-new-map').css("display", 'none');
   $('.map-list').css("display", 'none');
+  $('header#profile-banner').css("display", 'none');
   const map = L.map('map').setView([51.505, -0.09], 13);
   drawnItems = new L.FeatureGroup().addTo(map);
   editActions = [

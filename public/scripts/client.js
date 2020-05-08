@@ -1,5 +1,9 @@
-// import * as helpers from '../helpers/mapHelpers.js';
+
 $(document).ready(function () {
+
+    //had to hardcode this. Need to change all instances where this is used!
+  // let current_user = 1;
+
   if (!sessionStorage.getItem('isLoggedIn')) {
     $('#logged-in').css('display', 'none');
     $('.login-options').css('display', 'block');
@@ -8,21 +12,6 @@ $(document).ready(function () {
     $('.login-options').css('display', 'none');
   }
   console.log(sessionStorage.getItem('isLoggedIn'));
-  //had to hardcode this. Need to change all instances where this is used!
-  current_user = 1;
-
-  loadMaps(current_user, undefined, undefined);
-
-  // landing page filtering
-  $('.maps-form form').on('submit', function (event) {
-    event.preventDefault();
-    $('.maps-list').html('');
-
-    const $city = $(this).find('input').val();
-    const $category = $(this).find('option:selected').val().toLowerCase();
-    console.log($category)
-    $category === 'all categories' ? loadMaps(current_user, `${$city}`, undefined) : loadMaps(current_user, `${$city}`, `${$category}`);
-  });
 
   $('#logged-in').click(event => {
     event.preventDefault()
@@ -73,7 +62,7 @@ $(document).ready(function () {
      })
      .then(() => {
       sessionStorage.setItem('isLoggedIn', true);
-      // sessionStorage.setItem('user_id', `${res.id}`)
+      sessionStorage.setItem('user_id', `${res.id}`)
       sessionStorage.setItem('email', `${email}`)
       $('.close').click();
       location.reload();
@@ -90,9 +79,9 @@ $(document).ready(function () {
         data: info
       })
       .then((res) => {
-        console.log(res);
+        current_user = res.id;
         sessionStorage.setItem('isLoggedIn',true);
-        // sessionStorage.setItem('user_id', `${res.id}`)
+        sessionStorage.setItem('user_id', `${res.id}`)
         sessionStorage.setItem('email', `${res.email}`)
        $('.close').click();
        location.reload();
@@ -102,9 +91,29 @@ $(document).ready(function () {
        $('#login-error').html('User does not exist').slideDown();
      })
     }
+  });
+
+
+  renderProfileInfo(sessionStorage.getItem('user_id'));
+
+  loadMaps(sessionStorage.getItem('user_id'), undefined, undefined);
+
+  $('#profile-image').click(function () {
+    $('#profile-banner').slideToggle('slow');
+  });
+
+  // landing page filtering
+  $('form#public-maps-list').on('submit', function (event) {
+    event.preventDefault();
+    $('.maps-list').html('');
+
+    const $city = $(this).find('input').val().toLowerCase();
+    const $category = $(this).find('option:selected').val().toLowerCase();
+
+      $category === 'all categories' ? loadMaps(sessionStorage.getItem('user_id'), `${$city}`, undefined) : loadMaps(sessionStorage.getItem('user_id'), `${$city}`, `${$category}`);
 
   });
-  scroll(0,0);
+
 });
 
 
