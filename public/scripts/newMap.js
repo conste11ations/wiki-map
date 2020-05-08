@@ -8,16 +8,16 @@ $(document).ready(function () {
   }
 });
 
-function saveMap(map) {
+function saveMap(map,id) {
   const points = [];
   map.eachLayer(function (layer) {
     if (layer.editing) {
       points.push(layer.toGeoJSON());
     }
   });
-
+  url = id ? `/api/maps/${id}`: '/api/maps'
   $.ajax({
-    url: '/api/maps',
+    url,
     type: 'POST',
     dataType: "json",
     data: { layers: JSON.stringify(points) }
@@ -34,19 +34,32 @@ function saveMap(map) {
 }
 
 
-function createNewMap() {
-  if (sessionStorage.getItem('status') != null) {
+function createNewMap(id) {
 
-  }
   $('#map').css('display', 'block');
   $('#create-new-map').css("display", 'none');
   $('.map-list').css("display", 'none');
   $('header#profile-banner').css("display", 'none');
   const map = L.map('map').setView([51.505, -0.09], 13);
+
   drawnItems = new L.FeatureGroup().addTo(map);
   editActions = [
     L.Toolbar2.EditAction.Popup.Edit,
     L.Toolbar2.EditAction.Popup.Delete,
+    L.Toolbar2.Action.extend({
+      options: {
+      toolbarIcon: {
+      className: 'leaflet-color-picker',
+      html: '<ion-icon name="information-circle-outline"></ion-icon>'
+    },
+    subToolbar:
+     new L.Toolbar2({ actions: [
+      L.ColorPicker.extendOptions({ color: '#db1d0f' }),
+      L.ColorPicker.extendOptions({ color: '#025100' }),
+      L.ColorPicker.extendOptions({ color: '#ffff00' }),
+      L.ColorPicker.extendOptions({ color: '#0000ff' })
+    ]})
+  }})
 
   ];
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -110,13 +123,23 @@ function createNewMap() {
     }
   });
 
+
+
   new L.Toolbar2.DrawToolbar({
     position: 'topleft'
   }).addTo(map);
 
-
+  if (id) {
+    loadLayers(id, map);
+    $('#map').css('display', 'block');
+    $('.maps-list').html('');
+  }
   L.easyButton('<ion-icon name="save-outline"></ion-icon>', function () {
-    saveMap(map);
+    if (id) {
+      saveMap(map,id)
+    } else {
+      saveMap(map);
+    }
     map.remove();
     $('#create-new-map').css("display", 'block');
   }, 'Save').addTo(map);

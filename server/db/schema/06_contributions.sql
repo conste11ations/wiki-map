@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS contributions CASCADE;
+CREATE TABLE contributions (
+  map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+);

@@ -110,12 +110,13 @@ const loadMaps = (userId, city, category) => {
       }).addTo(mymap);
 
 
-
-    L.easyButton( '<ion-icon name="create-outline"></ion-icon>', function(){
-      // saveMap(map);
+    if (sessionStorage.getItem('isLoggedIn')) {
+      L.easyButton( '<ion-icon name="create-outline"></ion-icon>', function(){
+        createNewMap(value.id);
       // map.remove();
       // $('#create-new-map').css("display", 'block');
-    }, 'Save').addTo(mymap);
+      }, 'Edit').addTo(mymap);
+    }
 
       loadLayers(value.id, mymap);
       mapList[mapId] = mymap;
