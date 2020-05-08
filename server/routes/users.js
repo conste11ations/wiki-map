@@ -25,7 +25,6 @@ module.exports = (db, dbHelpers) => {
 
   router.get("/:id", (req, res) => {
     let query = `SELECT * FROM users WHERE id = ${req.params.id};`;
-    console.log(query);
     db.query(query)
       .then(data => {
         const users = data.rows;
@@ -40,7 +39,6 @@ module.exports = (db, dbHelpers) => {
 
   router.get("/:id/favorites", (req, res) => {
     let query = `SELECT * FROM favorites WHERE user_id = ${req.params.id};`;
-    console.log(query);
     db.query(query)
       .then(data => {
         const users = data.rows;
@@ -57,8 +55,7 @@ module.exports = (db, dbHelpers) => {
     deleteFlag = req.body.delete;
     if (deleteFlag === 'true') {
       let query = `DELETE FROM favorites WHERE user_id = ${req.body.user_id} AND map_id = ${req.body.map_id} RETURNING *;`;
-    console.log(query);
-    db.query(query)
+      db.query(query)
       .then(data => {
         const users = data.rows;
         res.json({ users });
@@ -69,8 +66,8 @@ module.exports = (db, dbHelpers) => {
           .json({ error: err.message });
       });
     } else {
-    let query = `INSERT INTO favorites (user_id, map_id) VALUES (${req.body.user_id}, ${req.body.map_id}) RETURNING *;`;
-    db.query(query)
+      let query = `INSERT INTO favorites (user_id, map_id) VALUES (${req.body.user_id}, ${req.body.map_id}) RETURNING *;`;
+      db.query(query)
       .then(data => {
         const users = data.rows;
         res.json({ users });
@@ -92,8 +89,6 @@ module.exports = (db, dbHelpers) => {
     const {email, password, city, name} = req.body;
     dbHelpers.createNewUser(email, password, city, name)
     .then(data => {
-      console.log(data)
-      console.log(data.rows[0].id)
       req.session.user_id =  data.rows[0].id;
       // $('#login-error').text('').slideUp();
       res.json( {id:data.rows[0].id, email} );
@@ -118,7 +113,6 @@ module.exports = (db, dbHelpers) => {
       res.sendStatus(400);
     }})
     .catch(err => {
-      console.log(err)
       res.sendStatus(400);
     })
   });

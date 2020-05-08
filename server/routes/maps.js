@@ -25,7 +25,6 @@ module.exports = (db) => {
       }
     }
     if(joins.length > 0) {
-      console.log('first join');
       query +=  joins.join(' ');
     }
     if(conditions.length !== 0) {
@@ -36,8 +35,7 @@ module.exports = (db) => {
       query+= ` UNION SELECT m.* FROM maps m  where m.user_id = ${userId} ${ conditions.length > 0 ? `and ${conditions.join(' and ')}` :''}  `;
     }
 
-    console.log('amrhamada', query);
-    db.query(query)
+      db.query(query)
       .then(data => {
         const maps = data.rows;
         res.json({ maps });

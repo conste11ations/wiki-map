@@ -8,7 +8,6 @@ $(document).ready(function () {
     $('#logged-in').css('display', 'block');
     $('.login-options').css('display', 'none');
   }
-  console.log(sessionStorage.getItem('isLoggedIn'));
 
   $('#logged-in').click(event => {
     event.preventDefault()
@@ -49,7 +48,6 @@ $(document).ready(function () {
 
   $('.modal-body form').submit(event => {
     event.preventDefault();
-    // console.log(event);
     const button = $('.modal-body button').text();
     const login = (button === 'Login' ? true : false)
     if (!login) {

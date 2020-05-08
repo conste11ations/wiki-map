@@ -35,10 +35,9 @@ module.exports = (db) => {
         return db.query(query, values)
 
       }
-      // return false
+
     })
-    // .then(dbRes => dbRes.rows[0].id)
-    // .catch(err =>console.log( err))
+
   };
 
   return {

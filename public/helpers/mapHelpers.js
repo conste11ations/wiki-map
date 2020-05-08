@@ -97,7 +97,6 @@ const loadFavorites = (userId, mapList) => {
 
 
 const loadMaps = (userId, city, category,favorites, contributions) => {
-  console.log(category)
   $.ajax({
     method: 'GET',
     url: '/api/maps',
