@@ -71,10 +71,11 @@ $(document).ready(function () {
        type: "POST",
        data: info
      })
-     .then(() => {
+     .then((res) => {
+
       sessionStorage.setItem('isLoggedIn', true);
       // sessionStorage.setItem('user_id', `${res.id}`)
-      sessionStorage.setItem('email', `${email}`)
+      sessionStorage.setItem('email', `${res.email}`)
       $('.close').click();
       location.reload();
     })

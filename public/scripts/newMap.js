@@ -8,16 +8,16 @@ $(document).ready(function () {
   }
 });
 
-function saveMap(map) {
+function saveMap(map,id) {
   const points = [];
   map.eachLayer(function (layer) {
     if (layer.editing) {
       points.push(layer.toGeoJSON());
     }
   });
-
+  url = id ? `/api/maps/${id}`: '/api/maps'
   $.ajax({
-    url: '/api/maps',
+    url,
     type: 'POST',
     dataType: "json",
     data: { layers: JSON.stringify(points) }
@@ -34,16 +34,12 @@ function saveMap(map) {
 }
 
 
-function createNewMap() {
-  if (sessionStorage.getItem('status') != null) {
+function createNewMap(id) {
 
-  }
   $('#map').css('display', 'block');
   $('#create-new-map').css("display", 'none');
   $('.map-list').css("display", 'none');
   const map = L.map('map').setView([51.505, -0.09], 13);
-  const container = $('<div> Hello Rachel</div>');
-
 
   drawnItems = new L.FeatureGroup().addTo(map);
   editActions = [
@@ -80,11 +76,11 @@ function createNewMap() {
     // console.log(layer)
     //form for title
     // layer
-    layer.bindPopup("hello");
-    layer.on("add", function (event) {
-      event.target.openPopup();
-      console.log(layer);
-    });
+    // layer.bindPopup("hello");
+    // layer.on("add", function (event) {
+    //   event.target.openPopup();
+    //   console.log(layer);
+    // });
 
 
     drawnItems.addLayer(layer);
@@ -102,9 +98,17 @@ function createNewMap() {
     position: 'topleft'
   }).addTo(map);
 
-
+  if (id) {
+    loadLayers(id, map);
+    $('#map').css('display', 'block');
+    $('.maps-list').html('');
+  }
   L.easyButton('<ion-icon name="save-outline"></ion-icon>', function () {
-    saveMap(map);
+    if (id) {
+      saveMap(map,id)
+    } else {
+      saveMap(map);
+    }
     map.remove();
     $('#create-new-map').css("display", 'block');
   }, 'Save').addTo(map);

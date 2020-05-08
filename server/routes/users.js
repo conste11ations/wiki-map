@@ -92,7 +92,7 @@ module.exports = (db, dbHelpers) => {
       console.log(data.rows[0].id)
       req.session.user_id =  data.rows[0].id;
       // $('#login-error').text('').slideUp();
-      res.json({ email });
+      res.json( {email} );
 
     })
     .catch(err => {
