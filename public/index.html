@@ -125,13 +125,13 @@
           <h3>Favorites & Contributions</h3>
           <div class="col-auto">
             <label class="checkbox-inline">Show favorites only
-              <input type="checkbox" checked="checked">
+              <input id='favorites' onchange="filterSearchOptions(this)"type="checkbox" >
               <span class="checkmark"></span>
             </label>
           </div>
           <div class="col-auto">
             <label class="checkbox-inline">Show contributions only
-              <input type="checkbox">
+              <input id='contributions'  onchange="filterSearchOptions(this)" type="checkbox">
               <span class="checkmark"></span>
             </label>
           </div>

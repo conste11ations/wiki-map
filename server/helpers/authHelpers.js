@@ -30,8 +30,8 @@ module.exports = (db) => {
     .then(dbRes => {
       if (dbRes.rows.length === 0) {
         const hashedPassword = bcrypt.hashSync(password, 10);
-        const query = 'INSERT INTO users (name, email, password, city) values ($1,$2,$3,$4) RETURNING id'
-        const values = [name,  email, hashedPassword, city];
+        const query = 'INSERT INTO users (name, email, password, city, profile_image) values ($1,$2,$3,$4, $5) RETURNING id'
+        const values = [name,  email, hashedPassword, city, 'https://i.imgur.com/3GvwNBf.png'];
         return db.query(query, values)
 
       }

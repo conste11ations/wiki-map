@@ -15,6 +15,9 @@ $(document).ready(function () {
 
   $('#logged-in').click(event => {
     event.preventDefault()
+    if ($(event.target).is('span')) {
+      return;
+    }
     $.ajax({
       url: 'api/users/logout',
       type: "POST",
@@ -111,12 +114,29 @@ $(document).ready(function () {
     const $city = $(this).find('input').val().toLowerCase();
     const $category = $(this).find('option:selected').val().toLowerCase();
 
-      $category === 'all categories' ? loadMaps(sessionStorage.getItem('user_id'), `${$city}`, undefined) : loadMaps(sessionStorage.getItem('user_id'), `${$city}`, `${$category}`);
+    loadMapSelections($city, $category,$('#favorites')[0].checked, $('#contributions')[0].checked);
 
   });
+
+
+
+  function loadMapSelections($city, $category, favorites, contributions){
+
+    loadMaps(
+      sessionStorage.getItem('user_id'),
+      `${$city}`, $category === 'all categories' ? undefined: `${$category}`,
+      favorites,
+      contributions
+     );
+      // loadMaps(sessionStorage.getItem('user_id'), `${$city}`, `${$category}`);
+  }
 
 });
 
 
 
 
+
+function filterSearchOptions(event) {
+  $('form#public-maps-list button').click()
+}

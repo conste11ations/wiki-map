@@ -54,7 +54,9 @@ module.exports = (db, dbHelpers) => {
   });
 
   router.post("/:id/favorites", (req, res) => {
-    let query = `INSERT INTO favorites (user_id, map_id) VALUES (${req.body.user_id}, ${req.body.map_id}) RETURNING *;`;
+    deleteFlag = req.body.delete;
+    if (deleteFlag === 'true') {
+      let query = `DELETE FROM favorites WHERE user_id = ${req.body.user_id} AND map_id = ${req.body.map_id} RETURNING *;`;
     console.log(query);
     db.query(query)
       .then(data => {
@@ -66,22 +68,24 @@ module.exports = (db, dbHelpers) => {
           .status(500)
           .json({ error: err.message });
       });
+    } else {
+    let query = `INSERT INTO favorites (user_id, map_id) VALUES (${req.body.user_id}, ${req.body.map_id}) RETURNING *;`;
+    db.query(query)
+      .then(data => {
+        const users = data.rows;
+        res.json({ users });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+    }
   });
 
-  router.delete("/:id/favorites", (req, res) => {
-    let query = `DELETE FROM favorites WHERE user_id = ${req.body.user_id} AND map_id = ${req.body.map_id} RETURNING *;`;
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const users = data.rows;
-        res.json({ users });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
+  // router.delete("/:id/favorites", (req, res) => {
+
+  // });
 
   router.post('/register',  (req, res) => {
 
@@ -92,7 +96,7 @@ module.exports = (db, dbHelpers) => {
       console.log(data.rows[0].id)
       req.session.user_id =  data.rows[0].id;
       // $('#login-error').text('').slideUp();
-      res.json( {email} );
+      res.json( {id:data.rows[0].id, email} );
 
     })
     .catch(err => {

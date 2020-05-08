@@ -3,17 +3,40 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
+    const userId = req.session.user_id;
+    let query = `SELECT m.* FROM maps m`;
+    let conditions = [];
+    let joins = [] ;
+    const {city, category, favorites, contributions}= req.query;
 
-    let query;
-    if (req.query.city && req.query.category) {
-      query = `SELECT * FROM maps where city = '${req.query.city}' AND category = '${req.query.category}'`;
-    } else if (req.query.city) {
-      query = `SELECT * FROM maps where city = '${req.query.city}'`;
-    } else if (req.query.category) {
-      query = `SELECT * FROM maps where category = '${req.query.category}'`;
-    } else {
-      query = `SELECT * FROM maps`;
+    if (city) {
+      conditions.push(`m.city = '${city}'`);
     }
+    if (category) {
+      conditions.push(`m.category = '${category}'`);
+    }
+    if (userId) {
+      if (favorites === 'true') {
+        joins.push(` join favorites f on m.id = f.map_id and  f.user_id = ${userId}`);
+      }
+
+      if (contributions === 'true' ) {
+        joins.push(` join contributions c on m.id = c.map_id and  c.user_id = ${userId} `);
+      }
+    }
+    if(joins.length > 0) {
+      console.log('first join');
+      query +=  joins.join(' ');
+    }
+    if(conditions.length !== 0) {
+       query +=` WHERE ${conditions.join(' and ')}  `
+    }
+
+    if (contributions === 'true' ) {
+      query+= ` UNION SELECT m.* FROM maps m  where m.user_id = ${userId} ${ conditions.length > 0 ? `and ${conditions.join(' and ')}` :''}  `;
+    }
+
+    console.log('amrhamada', query);
     db.query(query)
       .then(data => {
         const maps = data.rows;

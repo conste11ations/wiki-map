@@ -16,7 +16,8 @@ const addFavorite = (userId, mapId) => {
     url: `/api/users/${userId}/favorites`,
     data: {
       user_id: userId,
-      map_id: mapId
+      map_id: mapId,
+      delete: false
     },
   }).then(result => {
 
@@ -25,11 +26,12 @@ const addFavorite = (userId, mapId) => {
 
 const removeFavorite = (userId, mapId) => {
   $.ajax({
-    method: 'DELETE',
+    method: 'POST',
     url: `/api/users/${userId}/favorites`,
     data: {
       user_id: userId,
-      map_id: mapId
+      map_id: mapId,
+      delete: true
     }
   }).then(result => {
 
@@ -81,13 +83,16 @@ const loadFavorites = (userId, mapList) => {
 };
 
 
-const loadMaps = (userId, city, category) => {
+const loadMaps = (userId, city, category,favorites, contributions) => {
+  console.log(category)
   $.ajax({
     method: 'GET',
     url: '/api/maps',
     data: {
-      city: city,
-      category: category
+      city,
+      category,
+      favorites,
+      contributions
     }
   }).then(result => {
     $('#map').css('display', 'none');
