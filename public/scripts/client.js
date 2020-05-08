@@ -1,9 +1,6 @@
 
 $(document).ready(function () {
 
-    //had to hardcode this. Need to change all instances where this is used!
-  // let current_user = 1;
-
   if (!sessionStorage.getItem('isLoggedIn')) {
     $('#logged-in').css('display', 'none');
     $('.login-options').css('display', 'block');
@@ -20,14 +17,14 @@ $(document).ready(function () {
       type: "POST",
       data: ''
     })
-    .then(() => {
-     sessionStorage.clear();
-     location.reload();
-   })
-   .catch(err => {
+      .then(() => {
+        sessionStorage.clear();
+        location.reload();
+      })
+      .catch(err => {
 
-    //  $('#login-error').html('Email already in use, try loging in').slideDown();
-   })
+        //  $('#login-error').html('Email already in use, try loging in').slideDown();
+      })
   })
 
   $('nav form').click(event => {
@@ -38,12 +35,11 @@ $(document).ready(function () {
       $('.modal-body button').text('Sign Up');
       $('#loginModalLabel').text('Sign Up');
       $('.sign-up').css('display', 'block');
-      $('.sign-up input').prop('required',true);
-    } else
-    {
+      $('.sign-up input').prop('required', true);
+    } else {
       $('.modal-body button').text('Login');
       $('#loginModalLabel').text('Login');
-      $('.sign-up input').prop('required',false);
+      $('.sign-up input').prop('required', false);
       $('.sign-up').css('display', 'none');
     }
   })
@@ -54,43 +50,43 @@ $(document).ready(function () {
     const button = $('.modal-body button').text();
     const login = (button === 'Login' ? true : false)
     if (!login) {
-      const info = {email:$('#email').val(), password:$('#password').val(), city:$('#city').val(), name:$('#user-name').val()};
-     $.ajax({
-       url: 'api/users/register',
-       type: "POST",
-       data: info
-     })
-     .then((res) => {
+      const info = { email: $('#email').val(), password: $('#password').val(), city: $('#city').val(), name: $('#user-name').val() };
+      $.ajax({
+        url: 'api/users/register',
+        type: "POST",
+        data: info
+      })
+        .then((res) => {
 
-      sessionStorage.setItem('isLoggedIn', true);
-      sessionStorage.setItem('user_id', `${res.id}`)
-      sessionStorage.setItem('email', `${res.email}`)
-      $('.close').click();
-      location.reload();
-    })
-    .catch(err => {
-      $('#login-error').html('Email already in use, try loging in').slideDown();
-    })
+          sessionStorage.setItem('isLoggedIn', true);
+          sessionStorage.setItem('user_id', `${res.id}`)
+          sessionStorage.setItem('email', `${res.email}`)
+          $('.close').click();
+          location.reload();
+        })
+        .catch(err => {
+          $('#login-error').html('Email already in use, try loging in').slideDown();
+        })
     } else {
-      const info = {email:$('#email').val(), password:$('#password').val()};
+      const info = { email: $('#email').val(), password: $('#password').val() };
 
       $.ajax({
         url: 'api/users/login',
         type: "POST",
         data: info
       })
-      .then((res) => {
-        current_user = res.id;
-        sessionStorage.setItem('isLoggedIn',true);
-        sessionStorage.setItem('user_id', `${res.id}`)
-        sessionStorage.setItem('email', `${res.email}`)
-       $('.close').click();
-       location.reload();
-     })
-     .catch(err => {
-       console.log('error',err)
-       $('#login-error').html('User does not exist').slideDown();
-     })
+        .then((res) => {
+          current_user = res.id;
+          sessionStorage.setItem('isLoggedIn', true);
+          sessionStorage.setItem('user_id', `${res.id}`)
+          sessionStorage.setItem('email', `${res.email}`)
+          $('.close').click();
+          location.reload();
+        })
+        .catch(err => {
+          console.log('error', err)
+          $('#login-error').html('User does not exist').slideDown();
+        })
     }
   });
 
@@ -111,7 +107,7 @@ $(document).ready(function () {
     const $city = $(this).find('input').val().toLowerCase();
     const $category = $(this).find('option:selected').val().toLowerCase();
 
-      $category === 'all categories' ? loadMaps(sessionStorage.getItem('user_id'), `${$city}`, undefined) : loadMaps(sessionStorage.getItem('user_id'), `${$city}`, `${$category}`);
+    $category === 'all categories' ? loadMaps(sessionStorage.getItem('user_id'), `${$city}`, undefined) : loadMaps(sessionStorage.getItem('user_id'), `${$city}`, `${$category}`);
 
   });
 
