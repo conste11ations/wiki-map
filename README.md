@@ -14,16 +14,37 @@ Wiki Map fulfills the following:
 * uses http://leafletjs.com/
 
 ### Front-end: 
-HTML/CSS, BootstrapJS
+HTML/CSS, BootstrapJS, leafletJS
 ### Back-end: 
 NodeJS, JQuery, Express (with RESTful routes), PostgreSQL (pg)
 
 
 ## Dependencies
 
-- Node 10.x or above
-- NPM 5.x or above
-- PG 6.x
+ ``` 
+ "dependencies": {
+    "bcrypt": "2.0.0",
+    "body-parser": "^1.19.0",
+    "chalk": "^2.4.2",
+    "cookie-session": "^1.4.0",
+    "dotenv": "^2.0.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "jquery": "^3.5.0",
+    "leaflet": "^1.6.0",
+    "leaflet-draw": "^1.0.4",
+    "leaflet-draw-toolbar": "^0.3.0-alpha.1",
+    "leaflet-easybutton": "^2.4.0",
+    "leaflet-toolbar": "^0.4.0-alpha.2",
+    "morgan": "^1.9.1",
+    "node-sass-middleware": "^0.11.0",
+    "pg": "^6.4.2",
+    "pg-native": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+```
 
 ## Getting Started
 
@@ -51,4 +72,10 @@ NodeJS, JQuery, Express (with RESTful routes), PostgreSQL (pg)
 
 
 ## Sample screenshots
-
+![wikimap main](docs/wikimap-main.png)
+![wikimap login](docs/wikimap-login.png)
+![wikimap loggedin](docs/wikimap-loggedin.png)
+![wikimap signin](docs/wikimap-signin.png)
+![wikimap create](docs/wikimap-create.png)
+![wikimap profile](docs/wikimap-profile.png)
+![wikimap filters](docs/wikimap-filters.png)
