@@ -1,16 +1,29 @@
-LHL Node Skeleton
-=========
+# Wiki Map
 
-## Project Setup
+Wiki Map is an SPA (single page app) that allows users to create and collaborate on maps. Maps are generally classified by location and category (e.g. food) which can then be filtered accordingly.
 
-The following steps are only for _one_ of the group members to perform.
+Wiki Map fulfills the following:
+* users can see a list of the available maps
+* users can view a map
+* a map can contain many points
+* each point can have: a title, description, and image
+* authenticated users can create maps
+* authenticated users can modify maps (add, edit, remove points)
+* users can favourite a map
+* users have profiles, indicating their favourite maps and maps they've contributed to
+* uses http://leafletjs.com/
 
-1. Create your own copy of this repo using the `Use This Template` button, ideally using the name of your project. The repo should be marked Public
-2. Verify that the skeleton code now shows up in your repo on GitHub, you should be automatically redirected
-3. Clone your copy of the repo to your dev machine
-4. Add your team members as collaborators to the project so that they can push to this repo
-5. Let your team members know the repo URL so that they use the same repo (they should _not_ create a copy/fork of this repo since that will add additional workflow complexity to the project)
+### Front-end: 
+HTML/CSS, BootstrapJS
+### Back-end: 
+NodeJS, JQuery, Express (with RESTful routes), PostgreSQL (pg)
 
+
+## Dependencies
+
+- Node 10.x or above
+- NPM 5.x or above
+- PG 6.x
 
 ## Getting Started
 
@@ -36,8 +49,6 @@ The following steps are only for _one_ of the group members to perform.
   - It runs through each of the files, in order, and executes them against the database. 
   - Note: you will lose all newly created (test) data each time this is run, since the schema files will tend to `DROP` the tables and recreate them.
 
-## Dependencies
 
-- Node 10.x or above
-- NPM 5.x or above
-- PG 6.x
+## Sample screenshots
+
